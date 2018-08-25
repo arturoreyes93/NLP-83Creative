@@ -12,6 +12,8 @@
 		DD118559212E32A7005BC925 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DD118557212E32A7005BC925 /* Main.storyboard */; };
 		DD11855B212E32AB005BC925 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DD11855A212E32AB005BC925 /* Assets.xcassets */; };
 		DD11855E212E32AB005BC925 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DD11855C212E32AB005BC925 /* LaunchScreen.storyboard */; };
+		DD118566212E36BC005BC925 /* productDatabase.plist in Resources */ = {isa = PBXBuildFile; fileRef = DD118565212E36BC005BC925 /* productDatabase.plist */; };
+		DDCA9A382130999200364BDC /* DictationSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDCA9A372130999200364BDC /* DictationSearchBar.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +24,8 @@
 		DD11855A212E32AB005BC925 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DD11855D212E32AB005BC925 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DD11855F212E32AB005BC925 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DD118565212E36BC005BC925 /* productDatabase.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = productDatabase.plist; sourceTree = "<group>"; };
+		DDCA9A372130999200364BDC /* DictationSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictationSearchBar.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,7 +60,9 @@
 			children = (
 				DD118553212E32A7005BC925 /* AppDelegate.swift */,
 				DD118555212E32A7005BC925 /* ViewController.swift */,
+				DDCA9A372130999200364BDC /* DictationSearchBar.swift */,
 				DD118557212E32A7005BC925 /* Main.storyboard */,
+				DD118565212E36BC005BC925 /* productDatabase.plist */,
 				DD11855A212E32AB005BC925 /* Assets.xcassets */,
 				DD11855C212E32AB005BC925 /* LaunchScreen.storyboard */,
 				DD11855F212E32AB005BC925 /* Info.plist */,
@@ -123,6 +129,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DD11855E212E32AB005BC925 /* LaunchScreen.storyboard in Resources */,
+				DD118566212E36BC005BC925 /* productDatabase.plist in Resources */,
 				DD11855B212E32AB005BC925 /* Assets.xcassets in Resources */,
 				DD118559212E32A7005BC925 /* Main.storyboard in Resources */,
 			);
@@ -136,6 +143,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DD118556212E32A7005BC925 /* ViewController.swift in Sources */,
+				DDCA9A382130999200364BDC /* DictationSearchBar.swift in Sources */,
 				DD118554212E32A7005BC925 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
