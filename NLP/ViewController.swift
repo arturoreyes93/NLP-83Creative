@@ -9,18 +9,6 @@
 import Foundation
 import UIKit
 
-struct Product {
-    let name: String
-    let features: String
-    let keywords: [String]
-    
-    init(_ productDict: [String:Any]) {
-        self.name = productDict["productName"] as! String
-        self.features = productDict["productFeatures"] as! String
-        self.keywords = productDict["keywords"] as! [String]
-    }
-}
-
 class ViewController: UIViewController, UISearchBarDelegate  {
 
     // MARK: Outlets
@@ -46,12 +34,16 @@ class ViewController: UIViewController, UISearchBarDelegate  {
         super.viewDidLoad()
         parseDatabase()
         recordingView.isHidden = true
-        navigationItem.title = "Search For A Product"
+        let textAttributes = [NSAttributedStringKey.foregroundColor:UIColor.white]
+        navigationController?.navigationBar.titleTextAttributes = textAttributes
+        navigationItem.title = "Product Inventory"
         
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 200
         tableView.tableHeaderView = resultsSearchController.dictationSearchBar
-        resultsSearchController.dictationSearchBar.placeholder = "Search here..."
+        resultsSearchController.dictationSearchBar.placeholder = "Search for a product..."
         resultsSearchController.dictationSearchBar.sizeToFit()
         resultsSearchController.dictationSearchBar.delegate = self
         resultsSearchController.dictationSearchBar.recordingDelegate = self
@@ -189,13 +181,6 @@ class ViewController: UIViewController, UISearchBarDelegate  {
             }
         }
     }
-    
-
-    
-    
-    
-    
-
 
 }
 
@@ -220,8 +205,10 @@ extension ViewController: UIRecordingDelegate, SpeechRecordingDelegate {
     @IBAction func stopRecording(_ sender: Any) {
         
         resultsSearchController.dictationSearchBar.stopButtonPressed = true
-        
+
         DispatchQueue.main.async {
+            self.resultsSearchController.dictationSearchBar.searchField.rightView = self.resultsSearchController.dictationSearchBar.activityIndicator
+            self.resultsSearchController.dictationSearchBar.activityIndicator.startAnimating()
             UIView.transition(with: self.recordingView, duration: 0.5, options: .transitionCrossDissolve, animations: {
                 self.recordingView.isHidden = true
                 self.recordingView.layoutIfNeeded()
@@ -249,7 +236,15 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         let product = matchingItems[indexPath.row]
         cell.textLabel?.text = product.name
         cell.detailTextLabel?.text = product.features
+        cell.textLabel?.textColor = .white
+        cell.detailTextLabel?.textColor = .white
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.backgroundColor = .clear
+        cell.contentView.backgroundColor = .clear
+        cell.backgroundView?.backgroundColor = .clear
     }
 }
 

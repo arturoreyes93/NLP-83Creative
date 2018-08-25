@@ -22,6 +22,9 @@ class DictationSearchBar: UISearchBar, SFSpeechRecognizerDelegate {
     var uiRecordingDelegate: UIRecordingDelegate?
     var recordingDelegate: SpeechRecordingDelegate?
     var stopButtonPressed = false
+    let microphoneButton = UIButton(frame: CGRect(x: 5, y: 5, width: 20, height: 20))
+    let activityIndicator = UIActivityIndicatorView(frame: CGRect(x: 5, y: 5, width: 20, height: 20))
+    var searchField: UITextField!
     
     let audioEngine = AVAudioEngine()
     let speechRecognizer: SFSpeechRecognizer? = SFSpeechRecognizer(locale: Locale.init(identifier: "en-US"))
@@ -39,7 +42,24 @@ class DictationSearchBar: UISearchBar, SFSpeechRecognizerDelegate {
     }
     
     override func draw(_ rect: CGRect) {
-        setMicrophoneButton()
+        if let textFieldIndex = getSearchFieldIndex() {
+            searchField = (subviews[0].subviews[textFieldIndex]) as! UITextField
+            searchField.textColor = .black
+            searchField.backgroundColor = .white
+            setMicrophoneButton()
+            searchField.rightView = microphoneButton
+            searchField.rightViewMode = .unlessEditing
+        }
+        
+        
+        self.isTranslucent = true
+        self.backgroundImage = UIImage()
+        self.backgroundColor = .white
+        self.barTintColor = .clear
+        
+        activityIndicator.color = .gray
+        
+        
     }
     
     func getSearchFieldIndex() -> Int? {
@@ -52,19 +72,11 @@ class DictationSearchBar: UISearchBar, SFSpeechRecognizerDelegate {
     }
     
     func setMicrophoneButton() {
-        if let textFieldIndex = getSearchFieldIndex() {
-            let searchField: UITextField = (subviews[0].subviews[textFieldIndex]) as! UITextField
-            searchField.rightViewMode = .unlessEditing
-            let microphoneButton = UIButton(frame: CGRect(x: 5, y: 5, width: 20, height: 20))
-            microphoneButton.setImage(#imageLiteral(resourceName: "record_100"), for: .normal)
-            microphoneButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-            microphoneButton.tintColor = .gray
-            microphoneButton.adjustsImageWhenDisabled = true
-            microphoneButton.adjustsImageWhenHighlighted = true
-            microphoneButton.addTarget(self, action: #selector(startRecording(_:)), for: .touchUpInside)
-            
-            searchField.rightView = microphoneButton
-        }
+        microphoneButton.setImage(#imageLiteral(resourceName: "record_100"), for: .normal)
+        microphoneButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        microphoneButton.adjustsImageWhenDisabled = true
+        microphoneButton.adjustsImageWhenHighlighted = true
+        microphoneButton.addTarget(self, action: #selector(startRecording(_:)), for: .touchUpInside)
     }
     
     func recordAndRecognizeSpeech() {
@@ -107,7 +119,7 @@ class DictationSearchBar: UISearchBar, SFSpeechRecognizerDelegate {
     }
     
     func beginStopTimer() {
-        let _ = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(stopRecordingAndSearch), userInfo: nil, repeats: false)
+        let _ = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(stopRecordingAndSearch), userInfo: nil, repeats: false)
     }
     
     @objc func stopRecordingAndSearch() {
@@ -115,9 +127,15 @@ class DictationSearchBar: UISearchBar, SFSpeechRecognizerDelegate {
         audioEngine.inputNode.removeTap(onBus: 0)
         request = SFSpeechAudioBufferRecognitionRequest()
         recordingDelegate?.didFinishRecordingWithResult()
+        
+        DispatchQueue.main.async {
+            self.searchField.rightView = self.microphoneButton
+            self.activityIndicator.stopAnimating()
+        }
     }
     
     @objc func startRecording(_ sender: UIButton) {
+        stopButtonPressed = false
         uiRecordingDelegate?.enableRecordingUI()
         recordAndRecognizeSpeech()
         

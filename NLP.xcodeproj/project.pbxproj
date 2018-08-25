@@ -14,6 +14,8 @@
 		DD11855E212E32AB005BC925 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DD11855C212E32AB005BC925 /* LaunchScreen.storyboard */; };
 		DD118566212E36BC005BC925 /* productDatabase.plist in Resources */ = {isa = PBXBuildFile; fileRef = DD118565212E36BC005BC925 /* productDatabase.plist */; };
 		DDCA9A382130999200364BDC /* DictationSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDCA9A372130999200364BDC /* DictationSearchBar.swift */; };
+		DDCA9A3A2131077500364BDC /* ProductModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDCA9A392131077500364BDC /* ProductModel.swift */; };
+		DDD559B42131A911005F70B8 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDD559B32131A911005F70B8 /* GradientView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +28,8 @@
 		DD11855F212E32AB005BC925 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DD118565212E36BC005BC925 /* productDatabase.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = productDatabase.plist; sourceTree = "<group>"; };
 		DDCA9A372130999200364BDC /* DictationSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictationSearchBar.swift; sourceTree = "<group>"; };
+		DDCA9A392131077500364BDC /* ProductModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductModel.swift; sourceTree = "<group>"; };
+		DDD559B32131A911005F70B8 /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,11 +65,13 @@
 				DD118553212E32A7005BC925 /* AppDelegate.swift */,
 				DD118555212E32A7005BC925 /* ViewController.swift */,
 				DDCA9A372130999200364BDC /* DictationSearchBar.swift */,
+				DDCA9A392131077500364BDC /* ProductModel.swift */,
 				DD118557212E32A7005BC925 /* Main.storyboard */,
 				DD118565212E36BC005BC925 /* productDatabase.plist */,
 				DD11855A212E32AB005BC925 /* Assets.xcassets */,
 				DD11855C212E32AB005BC925 /* LaunchScreen.storyboard */,
 				DD11855F212E32AB005BC925 /* Info.plist */,
+				DDD559B32131A911005F70B8 /* GradientView.swift */,
 			);
 			path = NLP;
 			sourceTree = "<group>";
@@ -144,7 +150,9 @@
 			files = (
 				DD118556212E32A7005BC925 /* ViewController.swift in Sources */,
 				DDCA9A382130999200364BDC /* DictationSearchBar.swift in Sources */,
+				DDD559B42131A911005F70B8 /* GradientView.swift in Sources */,
 				DD118554212E32A7005BC925 /* AppDelegate.swift in Sources */,
+				DDCA9A3A2131077500364BDC /* ProductModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
