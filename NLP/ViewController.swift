@@ -165,6 +165,11 @@ extension ViewController: UIRecordingDelegate, SpeechRecordingDelegate {
     
     /// Show blurred view and stop button while user is recording text to search
     func enableRecordingUI() {
+        
+        if resultsSearchController.dictationSearchBar.isFirstResponder {
+            resultsSearchController.dictationSearchBar.resignFirstResponder()
+        }
+        
         DispatchQueue.main.async {
             UIView.transition(with: self.recordingView, duration: 0.5, options: .transitionCrossDissolve, animations: {
                 self.recordingView.isHidden = false
