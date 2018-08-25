@@ -16,6 +16,9 @@
 		DDCA9A382130999200364BDC /* DictationSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDCA9A372130999200364BDC /* DictationSearchBar.swift */; };
 		DDCA9A3A2131077500364BDC /* ProductModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDCA9A392131077500364BDC /* ProductModel.swift */; };
 		DDD559B42131A911005F70B8 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDD559B32131A911005F70B8 /* GradientView.swift */; };
+		DDD559B62131BE75005F70B8 /* GoogleNLP.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDD559B52131BE75005F70B8 /* GoogleNLP.swift */; };
+		DDD559B82131C004005F70B8 /* AppleNLP.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDD559B72131C004005F70B8 /* AppleNLP.swift */; };
+		DDD559BC2131EC09005F70B8 /* GoogleAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDD559BB2131EC09005F70B8 /* GoogleAPI.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +33,9 @@
 		DDCA9A372130999200364BDC /* DictationSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictationSearchBar.swift; sourceTree = "<group>"; };
 		DDCA9A392131077500364BDC /* ProductModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductModel.swift; sourceTree = "<group>"; };
 		DDD559B32131A911005F70B8 /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
+		DDD559B52131BE75005F70B8 /* GoogleNLP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleNLP.swift; sourceTree = "<group>"; };
+		DDD559B72131C004005F70B8 /* AppleNLP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleNLP.swift; sourceTree = "<group>"; };
+		DDD559BB2131EC09005F70B8 /* GoogleAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleAPI.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,18 +68,29 @@
 		DD118552212E32A7005BC925 /* NLP */ = {
 			isa = PBXGroup;
 			children = (
+				DDD559BD21320561005F70B8 /* NLP_APIs */,
 				DD118553212E32A7005BC925 /* AppDelegate.swift */,
 				DD118555212E32A7005BC925 /* ViewController.swift */,
 				DDCA9A372130999200364BDC /* DictationSearchBar.swift */,
 				DDCA9A392131077500364BDC /* ProductModel.swift */,
+				DDD559B32131A911005F70B8 /* GradientView.swift */,
 				DD118557212E32A7005BC925 /* Main.storyboard */,
 				DD118565212E36BC005BC925 /* productDatabase.plist */,
 				DD11855A212E32AB005BC925 /* Assets.xcassets */,
 				DD11855C212E32AB005BC925 /* LaunchScreen.storyboard */,
 				DD11855F212E32AB005BC925 /* Info.plist */,
-				DDD559B32131A911005F70B8 /* GradientView.swift */,
 			);
 			path = NLP;
+			sourceTree = "<group>";
+		};
+		DDD559BD21320561005F70B8 /* NLP_APIs */ = {
+			isa = PBXGroup;
+			children = (
+				DDD559B52131BE75005F70B8 /* GoogleNLP.swift */,
+				DDD559BB2131EC09005F70B8 /* GoogleAPI.swift */,
+				DDD559B72131C004005F70B8 /* AppleNLP.swift */,
+			);
+			path = NLP_APIs;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -150,9 +167,12 @@
 			files = (
 				DD118556212E32A7005BC925 /* ViewController.swift in Sources */,
 				DDCA9A382130999200364BDC /* DictationSearchBar.swift in Sources */,
+				DDD559BC2131EC09005F70B8 /* GoogleAPI.swift in Sources */,
+				DDD559B82131C004005F70B8 /* AppleNLP.swift in Sources */,
 				DDD559B42131A911005F70B8 /* GradientView.swift in Sources */,
 				DD118554212E32A7005BC925 /* AppDelegate.swift in Sources */,
 				DDCA9A3A2131077500364BDC /* ProductModel.swift in Sources */,
+				DDD559B62131BE75005F70B8 /* GoogleNLP.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -117,7 +117,13 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </view>
-                    <navigationItem key="navigationItem" id="hE6-Ln-TvR"/>
+                    <navigationItem key="navigationItem" id="hE6-Ln-TvR">
+                        <barButtonItem key="rightBarButtonItem" title="Change API" id="Ptj-Jz-X3d">
+                            <connections>
+                                <action selector="changeCurrentAPI:" destination="BYZ-38-t0r" id="biE-Kn-5b5"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="recordingView" destination="nEZ-UQ-UgA" id="fDQ-ka-52E"/>
                         <outlet property="tableView" destination="bwD-ns-in0" id="XRm-kp-INK"/>

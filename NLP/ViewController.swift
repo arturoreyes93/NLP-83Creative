@@ -9,6 +9,10 @@
 import Foundation
 import UIKit
 
+enum NLPAPI {
+    case apple, google
+}
+
 class ViewController: UIViewController, UISearchBarDelegate  {
 
     // MARK: Outlets
@@ -17,15 +21,22 @@ class ViewController: UIViewController, UISearchBarDelegate  {
     
     // MARK: Properties
     let database = NSArray(contentsOf: Bundle.main.url(forResource: "productDatabase", withExtension: "plist")!) as! [[String: Any]]
+    var currentAPI: NLPAPI = .apple
+    var appleNLP: AppleNLP? = nil
+    var googleNLP: GoogleNLP? = nil
     var parsedDatabase = [Product]()
     var resultsSearchController = CustomSearchController(searchResultsController: nil)
-    var tagger = NSLinguisticTagger(tagSchemes: [.lemma, .lexicalClass, .nameType], options: 0)
-    let options: NSLinguisticTagger.Options = [.omitWhitespace, .joinNames]
-    var range: NSRange!
-    var searchQuery = Set<String>()
+    let noResultsString = "No results obtained from your search. Please try a different search."
+    var shouldShowAlert = false
     var matchingItems = [Product]() {
         didSet {
-            tableView.reloadData()
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+            
+            if shouldShowAlert && matchingItems.count == 0 {
+                postSimpleAlert(noResultsString)
+            }
         }
     }
  
@@ -36,13 +47,16 @@ class ViewController: UIViewController, UISearchBarDelegate  {
         recordingView.isHidden = true
         let textAttributes = [NSAttributedStringKey.foregroundColor:UIColor.white]
         navigationController?.navigationBar.titleTextAttributes = textAttributes
-        navigationItem.title = "Product Inventory"
+        navigationItem.title = "Apple NLP API"
         
+        // Set tableview
         tableView.delegate = self
         tableView.dataSource = self
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 200
         tableView.tableHeaderView = resultsSearchController.dictationSearchBar
+        
+        // Set search controller and search bar
         resultsSearchController.dictationSearchBar.placeholder = "Search for a product..."
         resultsSearchController.dictationSearchBar.sizeToFit()
         resultsSearchController.dictationSearchBar.delegate = self
@@ -62,95 +76,56 @@ class ViewController: UIViewController, UISearchBarDelegate  {
         }
     }
     
-    // Natural Language Methods
-    
-    /// Get meaningful keywords from search query text
-    func getMeaningfulKeywords(_ text: String) {
-        tagger.string = text
-        range = NSRange(location: 0, length: text.utf16.count)
-        getWordsWithPunctuation(text)
-        getMeaningfulPartsOfSpeech(text) { (meaningful) in
-            self.lemmatizationOfMeaningfulWords(text, meaningfulWords: meaningful) { (meaningfulAndRoots) in
-                for word in meaningfulAndRoots {
-                    self.searchQuery.insert(word.lowercased())
-                }
-            }
-        }
+    /// Post an alert to the user for errors
+    func postSimpleAlert(_ title: String) {
+        let alert = UIAlertController(title: title, message: nil, preferredStyle: UIAlertControllerStyle.alert)
+        let dismiss = UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil)
+        alert.addAction(dismiss)
+        self.present(alert, animated: true, completion: nil)
     }
     
-    func getWordsWithPunctuation(_ text: String) {
-        var prevTokenType: NSLinguisticTag?
-        var prevTokenRange: NSRange?
-        var prevToken: String?
-        var isDashWord = false
-        
-        tagger.enumerateTags(in: range, unit: .word, scheme: .tokenType, options: options) {
-            tag, tokenRange, _ in
-            let token = (text as NSString).substring(with: tokenRange)
-            print("\(token) : \(tag)")
-//            if tag == NSLinguisticTag.dash {
-//
-//            }
+    /// Switch between Apple's and Google's NLP API to analyze different results (Google proved to be more accurate)
+    @IBAction func changeCurrentAPI(_ sender: UIBarButtonItem) {
+        switch currentAPI {
+        case .apple:
+            currentAPI = .google
+            navigationItem.title = "Google NLP API"
+        default:
+            currentAPI = .apple
+            navigationItem.title = "Apple NLP API"
         }
-    }
-    
-    /// Add place name entities to search field
-    func getNameEntities(_ text: String) {
-        let tags: [NSLinguisticTag] = [.placeName, .organizationName]
-        tagger.enumerateTags(in: range, unit: .word, scheme: .nameType, options: options) {
-            tag, tokenRange, _ in
-            if let tag = tag, tags.contains(tag) {
-                let name = (text as NSString).substring(with: tokenRange)
-                searchQuery.insert(name.lowercased())
-                print("name: \(name)")
-            }
-        }
-    }
-    
-    /// Extract nouns, adjectives and other words from search query text
-    func getMeaningfulPartsOfSpeech(_ text: String, completionHandler: @escaping (_ result: [String]) -> Void) {
-        var meaningfulWords = [String]()
-        tagger.enumerateTags(in: range, unit: .word, scheme: .lexicalClass, options: options) {
-            tag, tokenRange, _ in
-            if let tag = tag {
-                let word = (text as NSString).substring(with: tokenRange)
-                print("\(word): \(tag.rawValue)")
-                if tag == NSLinguisticTag.noun || tag == NSLinguisticTag.adjective || tag == NSLinguisticTag.otherWord {
-                    meaningfulWords.append(word.lowercased())
-                }
-            }
-        }
-        print("meaningfulWords: \(meaningfulWords)")
-        completionHandler(meaningfulWords)
-    }
-    
-    /// Add the base root words from the meaningful words to increase search field
-    func lemmatizationOfMeaningfulWords(_ text: String, meaningfulWords: [String], completionHandlerForLemma: @escaping (_ result: [String]) -> Void) {
-        var meaningfulAndRootWords = meaningfulWords
-        tagger.enumerateTags(in: range, unit: .word, scheme: .lemma, options: options) { tag, tokenRange, stop in
-            if let lemma = tag?.rawValue {
-                let word = (text as NSString).substring(with: tokenRange)
-                if meaningfulWords.contains(word) {
-                    meaningfulAndRootWords.append(lemma)
-                }
-                print("\(word): \(lemma)")
-            }
-        }
-        
-        completionHandlerForLemma(meaningfulAndRootWords)
-        
-        print("meaningfulAndRoot: \(meaningfulAndRootWords)")
     }
     
     // MARK: SearchBar Delegate Methods
-    
     fileprivate func performSearch(_ searchBar: UISearchBar) {
-        searchQuery.removeAll()
         if searchBar.text != nil || searchBar.text != "" {
-            getMeaningfulKeywords(searchBar.text!)
-            print("searchQuery: \(searchQuery)")
-            matchingItems = parsedDatabase.filter({$0.keywords.sharesElements(with: Array(searchQuery))})
+            switch currentAPI {
+            case .apple:
+                appleNLP = AppleNLP(textToProcess: searchBar.text!)
+                appleNLP?.getMeaningfulKeywords() { [unowned self] (result) in
+                    guard result.count > 0 else {
+                        // Handle no meaningful words found
+                        self.postSimpleAlert(self.noResultsString)
+                        return }
+                    print("searchQuery: \(result)")
+                    self.matchingItems = self.parsedDatabase.filter({$0.keywords.sharesElements(with: Array(result))})
+                }
+            
+            case .google:
+                googleNLP = GoogleNLP(textToProcess: searchBar.text!)
+                googleNLP?.getMeaningfulKeywords() { [unowned self] (googleResult, error) in
+                    guard googleResult.count > 0 else {
+                        // Handle no meaningful words found
+                        let alertString = (error == nil) ? self.noResultsString : error
+                        self.postSimpleAlert(alertString!)
+                        return }
+                    print("searchQuery: \(googleResult)")
+                    self.matchingItems = self.parsedDatabase.filter({$0.keywords.sharesElements(with: Array(googleResult))})
+                }
+            }
         }
+        
+        shouldShowAlert = true
     }
     
     /// Make search query only upon clicking search button since the query is ideally a service call
@@ -170,6 +145,7 @@ class ViewController: UIViewController, UISearchBarDelegate  {
                 }
             }
         }
+        shouldShowAlert = false
         matchingItems.removeAll()
     }
     
@@ -187,8 +163,8 @@ class ViewController: UIViewController, UISearchBarDelegate  {
 // MARK: Recording Delegate Methods
 extension ViewController: UIRecordingDelegate, SpeechRecordingDelegate {
     
+    /// Show blurred view and stop button while user is recording text to search
     func enableRecordingUI() {
-        
         DispatchQueue.main.async {
             UIView.transition(with: self.recordingView, duration: 0.5, options: .transitionCrossDissolve, animations: {
                 self.recordingView.isHidden = false
@@ -197,11 +173,12 @@ extension ViewController: UIRecordingDelegate, SpeechRecordingDelegate {
         }
     }
     
+    /// Recording was finished and there are results to perform search
     func didFinishRecordingWithResult() {
         performSearch(resultsSearchController.dictationSearchBar)
     }
     
-    
+    /// Stop button pressed to stop recording
     @IBAction func stopRecording(_ sender: Any) {
         
         resultsSearchController.dictationSearchBar.stopButtonPressed = true
@@ -215,9 +192,8 @@ extension ViewController: UIRecordingDelegate, SpeechRecordingDelegate {
                 self.view.layoutIfNeeded()
             }, completion: nil)
         }
-        
-        
     }
+    
 }
 
 // MARK: TableView Delegate Method

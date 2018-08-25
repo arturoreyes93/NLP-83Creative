@@ -6,49 +6,65 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "NLP/DictationSearchBar.swift"
-            timestampString = "556907106.996748"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "93"
-            endingLineNumber = "93"
-            landmarkName = "recordAndRecognizeSpeech()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "NLP/ViewController.swift"
-            timestampString = "556907106.997128"
+            timestampString = "556926656.323647"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "164"
-            endingLineNumber = "164"
-            landmarkName = "searchBarCancelButtonClicked(_:)"
+            startingLineNumber = "123"
+            endingLineNumber = "123"
+            landmarkName = "performSearch(_:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 (Swift.Set&lt;Swift.String&gt;, Swift.Optional&lt;Swift.String&gt;) -&gt; () in NLP.ViewController.(performSearch in _0BAA2069CBA847F836B60E8499B40A22)(__ObjC.UISearchBar) -&gt; ()"
+                  moduleName = "NLP"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/arturoreyes/Documents/Developer/NLP/NLP/ViewController.swift"
+                  timestampString = "556924902.050638"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "120"
+                  endingLineNumber = "120"
+                  offsetFromSymbolStart = "685">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (NLP.Product) -&gt; Swift.Bool in closure #2 (Swift.Set&lt;Swift.String&gt;, Swift.Optional&lt;Swift.String&gt;) -&gt; () in NLP.ViewController.(performSearch in _0BAA2069CBA847F836B60E8499B40A22)(__ObjC.UISearchBar) -&gt; ()"
+                  moduleName = "NLP"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/arturoreyes/Documents/Developer/NLP/NLP/ViewController.swift"
+                  timestampString = "556924902.0526299"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "120"
+                  endingLineNumber = "120"
+                  offsetFromSymbolStart = "16">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "NLP/DictationSearchBar.swift"
-            timestampString = "556907106.997396"
+            filePath = "NLP/ViewController.swift"
+            timestampString = "556926656.324236"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "112"
-            endingLineNumber = "112"
-            landmarkName = "recordAndRecognizeSpeech()"
-            landmarkType = "7">
+            startingLineNumber = "34"
+            endingLineNumber = "34"
+            landmarkName = "matchingItems"
+            landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

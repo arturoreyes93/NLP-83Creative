@@ -34,7 +34,6 @@ class DictationSearchBar: UISearchBar, SFSpeechRecognizerDelegate {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.frame = frame
-        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -46,9 +45,16 @@ class DictationSearchBar: UISearchBar, SFSpeechRecognizerDelegate {
             searchField = (subviews[0].subviews[textFieldIndex]) as! UITextField
             searchField.textColor = .black
             searchField.backgroundColor = .white
-            setMicrophoneButton()
-            searchField.rightView = microphoneButton
-            searchField.rightViewMode = .unlessEditing
+            
+            SFSpeechRecognizer.requestAuthorization({ (authStatus) in
+                if authStatus == .authorized {
+                    DispatchQueue.main.async {
+                        self.setMicrophoneButton()
+                        self.searchField.rightView = self.microphoneButton
+                        self.searchField.rightViewMode = .unlessEditing
+                    }
+                }
+            })
         }
         
         
